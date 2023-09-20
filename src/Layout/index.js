@@ -4,16 +4,16 @@ import Header from "@/components/Header"
 
 const Layout = ({ title = "", children }) => {
   return (
-    <>
+    <div className='relative'>
       <Head>
         <title>{title === "" ? "Auto Market" : `${title} - Auto Market`}</title>
         <link rel="icon" href="/logo-company.png" />
       </Head>
       <Header />
-      <div className='top-16'>
+      <div className='absolute top-16'>
         {children}
       </div>
-    </>
+    </div>
   )
 }
 

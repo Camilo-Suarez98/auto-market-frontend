@@ -1,12 +1,12 @@
 import Layout from '@/Layout'
 import React from 'react'
 
-const TestPage = () => {
+const CarsPage = () => {
   return (
-    <Layout>
+    <Layout title='Cars'>
       <div>TestPage</div>
     </Layout>
   )
 }
 
-export default TestPage
+export default CarsPage

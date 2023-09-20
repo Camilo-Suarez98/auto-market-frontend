@@ -54,7 +54,7 @@ const Header = () => {
               onChange={(e) => setInputValue(e.target.value)}
             />
             <button
-              className='rounded-tr-md rounded-br-md'
+              className='bg-white p-1 text-blue-700 rounded-tr-md rounded-br-md'
               type='button'
             >
               <FaMagnifyingGlass />
@@ -106,12 +106,12 @@ const Header = () => {
 
         <div className="flex justify-around items-center md:w-72 md:justify-between">
           <button
-            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
+            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
           >
             Create an Account
           </button>
           <button
-            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
+            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
           >
             Login
           </button>
