@@ -17,7 +17,7 @@ const Header = () => {
     }
   }
   return (
-    <header className='flex items-center justify-around w-full bg-blue-700 h-16 absolute md:justify-evenly'>
+    <header className='flex items-center justify-around w-full bg-blue-700 h-16 md:justify-evenly'>
       <div className="flex items-center">
         <Link href="/" className='flex items-center justify-center'>
           <Image

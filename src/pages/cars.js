@@ -1,10 +1,11 @@
 import Layout from '@/Layout'
 import React from 'react'
+import Card from '@/components/Card'
 
 const CarsPage = () => {
   return (
     <Layout title='Cars'>
-      <div>TestPage</div>
+      <Card />
     </Layout>
   )
 }
