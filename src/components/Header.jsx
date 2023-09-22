@@ -74,7 +74,7 @@ const Header = () => {
             </button>
           </div>
 
-          {/* to check after */}
+          {/* to check after/ nice to have */}
           {/* <div className='h-12 flex justify-center items-center'>
             <button
               className='w-9/12'
