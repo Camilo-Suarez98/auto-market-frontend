@@ -26,8 +26,8 @@ const Header = () => {
             height={50}
             alt="Company's logo"
           />
-          <h1 className='pl-3'>
-            AutoMarket
+          <h1 className='pl-3 font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl'>
+            Auto Market
           </h1>
         </Link>
       </div>
@@ -104,7 +104,7 @@ const Header = () => {
           </button>
         </div>
 
-        <div className="flex justify-around items-center md:w-72 md:justify-between">
+        <div className="flex items-center md:w-72 justify-around lg:justify-between">
           <button
             className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
           >
