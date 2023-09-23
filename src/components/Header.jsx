@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
@@ -8,6 +9,8 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 const Header = () => {
   const [showMenu, setShowMenu] = useState(true)
   const [inputValue, setInputValue] = useState('')
+
+  const router = useRouter()
 
   const handleBurgerMenu = () => {
     if (showMenu) {
@@ -33,6 +36,7 @@ const Header = () => {
       </div>
       <div className="burger-menu md:hidden">
         <button
+          className='outline-none'
           onClick={handleBurgerMenu}
         >
           {showMenu ?
@@ -44,7 +48,7 @@ const Header = () => {
 
       {/* mobile view starts here */}
       {!showMenu &&
-        <div className="fixed top-16 text-center w-full h-screen bg-blue-600 md:hidden">
+        <div className="absolute top-16 z-50 text-center w-full h-screen bg-blue-600 md:hidden">
           <div className='h-12 mt-5 flex justify-center items-center'>
             <input
               className='outline-0 text-blue-700 rounded-tl-md rounded-bl-md'
@@ -64,11 +68,13 @@ const Header = () => {
           <div className="flex flex-col justify-around items-center">
             <button
               className='bg-blue-500 px-3 py-2 my-5 rounded-md transition duration-500 hover:bg-blue-700'
+              onClick={() => router.push('/create-account')}
             >
               Create an Account
             </button>
             <button
               className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
+              onClick={() => router.push('/login')}
             >
               Login
             </button>
@@ -107,11 +113,13 @@ const Header = () => {
         <div className="flex items-center md:w-72 justify-around lg:justify-between">
           <button
             className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+            onClick={() => router.push('/create-account')}
           >
             Create an Account
           </button>
           <button
             className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+            onClick={() => router.push('/login')}
           >
             Login
           </button>
