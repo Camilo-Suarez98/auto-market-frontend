@@ -25,15 +25,15 @@ const CarsPage = () => {
         </button>
 
         <div className='w-1/4 hidden flex-col sm:flex'>
-          <p>
+          <p className='text-center'>
             Filter by:
           </p>
           <div>
-            <form className='w-9/12 flex flex-col'>
+            <form className='w-9/12 m-auto flex flex-col'>
               <label htmlFor='brand'>Brand</label>
               <select id='brand' name='brand' className='text-black rounded-md px-2 py-1 mb-2'>
                 <option value="Choose an option">-- --</option>
-                <option value="chevrolet">chevrolet</option>
+                <option value="chevrolet">Chevrolet</option>
               </select>
 
               <label htmlFor='model'>Model</label>
@@ -71,8 +71,14 @@ const CarsPage = () => {
                 <option value="Choose an option">-- --</option>
                 <option value=""></option>
               </select>
+
+              <label htmlFor='price'>Price</label>
+              <select id='price' name='price' className='text-black rounded-md px-2 py-1 mb-2'>
+                <option value="Choose an option">-- --</option>
+                <option value=""></option>
+              </select>
               <button
-                className='bg-blue-700 mt-2 px-0.5 py-px min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6 hover:bg-blue-500 transition duration-500'
+                className='bg-blue-700 mt-2 px-0.5 py-px min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6'
               >
                 Search
               </button>
@@ -93,37 +99,43 @@ const CarsPage = () => {
 
                 <label htmlFor='model'>Model</label>
                 <select id='model' name='model' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='year'>Year</label>
                 <select id='year' name='year' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='km'>Km</label>
                 <select id='km' name='km' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='location'>Location</label>
                 <select id='location' name='location' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='fuel'>Fuel</label>
                 <select id='fuel' name='fuel' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='color'>Color</label>
                 <select id='color' name='color' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
+                  <option value=""></option>
+                </select>
+
+                <label htmlFor='price'>Price</label>
+                <select id='price' name='price' className='text-black rounded-md px-2 py-1 mb-2'>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
                 <button
