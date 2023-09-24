@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Layout from "@/Layout";
 import AwesomeSlider from 'react-awesome-slider';
 import withAutoplay from 'react-awesome-slider/dist/autoplay';
