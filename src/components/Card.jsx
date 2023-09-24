@@ -16,10 +16,12 @@ const Card = () => {
             />
           </div>
           <div className="info-section">
-            <h2>$ Price</h2>
-            <h3>Brand with model</h3>
-            <p>year</p>  {/* Including kms, year and location */}
-            <p>kms</p>  {/* Including kms, year and location */}
+            <h2 className='text-2xl'>$ Price</h2>
+            <h3 className='text-xl'>Brand with model</h3>
+            <div className="flex">
+              <p className='w-1/2'>year</p>  {/* Including kms, year and location */}
+              <p className='w-1/2'>kms</p>  {/* Including kms, year and location */}
+            </div>
             <p>location</p>  {/* Including kms, year and location */}
           </div>
         </div>

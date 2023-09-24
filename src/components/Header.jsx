@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
@@ -8,6 +9,8 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 const Header = () => {
   const [showMenu, setShowMenu] = useState(true)
   const [inputValue, setInputValue] = useState('')
+
+  const router = useRouter()
 
   const handleBurgerMenu = () => {
     if (showMenu) {
@@ -26,13 +29,14 @@ const Header = () => {
             height={50}
             alt="Company's logo"
           />
-          <h1 className='pl-3'>
-            AutoMarket
+          <h1 className='pl-3 font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl'>
+            Auto Market
           </h1>
         </Link>
       </div>
       <div className="burger-menu md:hidden">
         <button
+          className='outline-none'
           onClick={handleBurgerMenu}
         >
           {showMenu ?
@@ -44,7 +48,7 @@ const Header = () => {
 
       {/* mobile view starts here */}
       {!showMenu &&
-        <div className="fixed top-16 text-center w-full h-screen bg-blue-600 md:hidden">
+        <div className="absolute top-16 z-50 text-center w-full h-screen bg-blue-600 md:hidden">
           <div className='h-12 mt-5 flex justify-center items-center'>
             <input
               className='outline-0 text-blue-700 rounded-tl-md rounded-bl-md'
@@ -64,17 +68,19 @@ const Header = () => {
           <div className="flex flex-col justify-around items-center">
             <button
               className='bg-blue-500 px-3 py-2 my-5 rounded-md transition duration-500 hover:bg-blue-700'
+              onClick={() => router.push('/create-account')}
             >
               Create an Account
             </button>
             <button
               className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
+              onClick={() => router.push('/login')}
             >
               Login
             </button>
           </div>
 
-          {/* to check after */}
+          {/* to check after/ nice to have */}
           {/* <div className='h-12 flex justify-center items-center'>
             <button
               className='w-9/12'
@@ -104,14 +110,16 @@ const Header = () => {
           </button>
         </div>
 
-        <div className="flex justify-around items-center md:w-72 md:justify-between">
+        <div className="flex items-center md:w-72 justify-around lg:justify-between">
           <button
             className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+            onClick={() => router.push('/create-account')}
           >
             Create an Account
           </button>
           <button
             className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+            onClick={() => router.push('/login')}
           >
             Login
           </button>
