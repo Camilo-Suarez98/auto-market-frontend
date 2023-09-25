@@ -14,7 +14,7 @@ const LoginPage = () => {
             id='email'
             name='email'
             type='text'
-            className='mb-4 py-1 px-2 rounded-md outline-none'
+            className='mb-4 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='example@test.com'
           />
 
@@ -23,7 +23,7 @@ const LoginPage = () => {
             id='password'
             name='password'
             type='password'
-            className='mb-4 py-1 px-2 rounded-md outline-none'
+            className='mb-4 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Password'
           />
 

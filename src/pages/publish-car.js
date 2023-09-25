@@ -1,8 +1,19 @@
 import Layout from '@/Layout'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { brands, colors, years } from '../../public/fakeData'
 import { FaCarSide } from 'react-icons/fa'
 
-const publishCar = () => {
+const PublishCar = () => {
+  const [brandData, setBrandData] = useState([])
+  const [yearsData, setYearsData] = useState([])
+  const [colorsData, setColorsData] = useState([])
+
+  useEffect(() => {
+    setBrandData(brands)
+    setYearsData(years)
+    setColorsData(colors)
+  }, [])
+
   return (
     <Layout>
       <div>
@@ -32,38 +43,40 @@ const publishCar = () => {
           <div className='w-5/6 m-auto p-3 mt-4 mb-16 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12'>
             <form className='flex flex-col'>
               <label htmlFor='brand' className='mt-2 text-lg sm:text-xl'>Brand</label>
-              <input
-                id='brand'
-                name='brand'
-                type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
-                placeholder='Ex: Chevrolet'
-              />
+              <select id='brand' name='brand' className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'>
+                <option value="Choose an option">-- --</option>
+                {brandData.map(item => (
+                  <option value={item.brand.toLowerCase()} key={item.brand}>
+                    {item.brand}
+                  </option>
+                ))}
+              </select>
 
               <label htmlFor='model' className='mt-2 text-lg sm:text-xl'>Model</label>
               <input
                 id='model'
                 name='model'
                 type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Sonic'
               />
 
               <label htmlFor='year' className='mt-2 text-lg sm:text-xl'>Year</label>
-              <input
-                id='year'
-                name='year'
-                type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
-                placeholder='Ex: 2017'
-              />
+              <select id='year' name='year' className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'>
+                <option value="Choose an option">-- --</option>
+                {yearsData.map(year => (
+                  <option value={year} key={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
 
               <label htmlFor='km' className='mt-2 text-lg sm:text-xl'>Km</label>
               <input
                 id='km'
                 name='km'
                 type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: 12972'
               />
 
@@ -72,7 +85,7 @@ const publishCar = () => {
                 id='location'
                 name='location'
                 type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Bucaramanga'
               />
 
@@ -81,26 +94,27 @@ const publishCar = () => {
                 id='fuel'
                 name='fuel'
                 type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Diesel'
               />
 
               <label htmlFor='color' className='mt-2 text-lg sm:text-xl'>Color</label>
-              <input
-                id='color'
-                name='color'
-                type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
-                placeholder='Ex: Red'
-              />
+              <select id='color' name='color' className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'>
+                <option value="Choose an option">-- --</option>
+                {colorsData.map(color => (
+                  <option value={color.toLowerCase()} key={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
 
               <label htmlFor='price' className='mt-2 text-lg sm:text-xl'>Price</label>
               <input
                 id='price'
                 name='price'
                 type='text'
-                className='mb-2 py-1 px-2 rounded-md outline-none'
-                placeholder='Ex: $50.000.000'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+                placeholder='Ex: $20000'
               />
 
               <button
@@ -116,4 +130,4 @@ const publishCar = () => {
   )
 }
 
-export default publishCar
+export default PublishCar
