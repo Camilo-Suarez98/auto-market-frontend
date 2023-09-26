@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { brands, colors, years } from '../../public/fakeData'
 import { FaCarSide } from 'react-icons/fa'
 
-const PublishCar = () => {
+const PublishCarPage = () => {
   const [brandData, setBrandData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [colorsData, setColorsData] = useState([])
@@ -130,4 +130,4 @@ const PublishCar = () => {
   )
 }
 
-export default PublishCar
+export default PublishCarPage
