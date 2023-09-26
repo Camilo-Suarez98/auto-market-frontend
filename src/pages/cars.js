@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Layout from '@/Layout'
 import Card from '@/components/Card'
+import { brands, years, colors } from '../../public/fakeData'
 import { BiFilterAlt } from 'react-icons/bi'
 
 const CarsPage = () => {
   const [showFilters, setShowFilters] = useState(true)
+  const [brandsData, setBrandsData] = useState([])
+  const [yearsData, setYearsData] = useState([])
+  const [colorsData, setColorsData] = useState([])
+
+  useEffect(() => {
+    setBrandsData(brands)
+    setYearsData(years)
+    setColorsData(colors)
+  }, [])
 
   const handleShowFilters = () => {
     if (showFilters) {
@@ -25,15 +35,19 @@ const CarsPage = () => {
         </button>
 
         <div className='w-1/4 hidden flex-col sm:flex'>
-          <p>
+          <p className='text-center'>
             Filter by:
           </p>
           <div>
-            <form className='w-9/12 flex flex-col'>
+            <form className='w-9/12 m-auto flex flex-col'>
               <label htmlFor='brand'>Brand</label>
               <select id='brand' name='brand' className='text-black rounded-md px-2 py-1 mb-2'>
                 <option value="Choose an option">-- --</option>
-                <option value="chevrolet">chevrolet</option>
+                {brandsData.map(item => (
+                  <option value={item.brand.toLowerCase()} key={item.brand}>
+                    {item.brand}
+                  </option>
+                ))}
               </select>
 
               <label htmlFor='model'>Model</label>
@@ -45,7 +59,11 @@ const CarsPage = () => {
               <label htmlFor='year'>Year</label>
               <select id='year' name='year' className='text-black rounded-md px-2 py-1 mb-2'>
                 <option value="Choose an option">-- --</option>
-                <option value=""></option>
+                {yearsData.map(item => (
+                  <option value={item} key={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
 
               <label htmlFor='km'>Km</label>
@@ -69,10 +87,20 @@ const CarsPage = () => {
               <label htmlFor='color'>Color</label>
               <select id='color' name='color' className='text-black rounded-md px-2 py-1 mb-2'>
                 <option value="Choose an option">-- --</option>
+                {colorsData.map(color => (
+                  <option value={color} key={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor='price'>Price</label>
+              <select id='price' name='price' className='text-black rounded-md px-2 py-1 mb-2'>
+                <option value="Choose an option">-- --</option>
                 <option value=""></option>
               </select>
               <button
-                className='bg-blue-700 mt-2 px-0.5 py-px min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6 hover:bg-blue-500 transition duration-500'
+                className='bg-blue-700 mt-2 px-0.5 py-px min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6'
               >
                 Search
               </button>
@@ -88,42 +116,60 @@ const CarsPage = () => {
                 <label htmlFor='brand'>Brand</label>
                 <select id='brand' name='brand' className='text-black rounded-md px-2 py-1 mb-2'>
                   <option value="Choose an option">-- --</option>
-                  <option value="chevrolet">Chevrolet</option>
+                  {brandsData.map(item => (
+                    <option value={item.brand.toLowerCase()} key={item.brand}>
+                      {item.brand}
+                    </option>
+                  ))}
                 </select>
 
                 <label htmlFor='model'>Model</label>
                 <select id='model' name='model' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='year'>Year</label>
                 <select id='year' name='year' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
-                  <option value=""></option>
+                  <option value="Choose an option">-- --</option>
+                  {yearsData.map(year => (
+                    <option value={year} key={year}>
+                      {year}
+                    </option>
+                  ))}
                 </select>
 
                 <label htmlFor='km'>Km</label>
                 <select id='km' name='km' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='location'>Location</label>
                 <select id='location' name='location' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='fuel'>Fuel</label>
                 <select id='fuel' name='fuel' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
 
                 <label htmlFor='color'>Color</label>
                 <select id='color' name='color' className='text-black rounded-md px-2 py-1 mb-2'>
-                  <option value="Choose an option" disabled></option>
+                  <option value="Choose an option">-- --</option>
+                  {colorsData.map(color => (
+                    <option value={color} key={color}>
+                      {color}
+                    </option>
+                  ))}
+                </select>
+
+                <label htmlFor='price'>Price</label>
+                <select id='price' name='price' className='text-black rounded-md px-2 py-1 mb-2'>
+                  <option value="Choose an option">-- --</option>
                   <option value=""></option>
                 </select>
                 <button

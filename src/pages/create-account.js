@@ -13,8 +13,8 @@ const CreateAccountPage = () => {
             id='firstName'
             name='firstName'
             type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none'
-            placeholder='example@test.com'
+            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+            placeholder='Pedro'
           />
 
           <label htmlFor='lastName' className='mt-2 text-lg sm:text-xl'>Last Name</label>
@@ -22,8 +22,8 @@ const CreateAccountPage = () => {
             id='lastName'
             name='lastName'
             type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none'
-            placeholder='example@test.com'
+            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+            placeholder='Perez'
           />
 
           <label htmlFor='email' className='mt-2 text-lg sm:text-xl'>Email</label>
@@ -31,7 +31,7 @@ const CreateAccountPage = () => {
             id='email'
             name='email'
             type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none'
+            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='example@test.com'
           />
 
@@ -40,7 +40,16 @@ const CreateAccountPage = () => {
             id='password'
             name='password'
             type='password'
-            className='mb-2 py-1 px-2 rounded-md outline-none'
+            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+            placeholder='Password'
+          />
+
+          <label htmlFor='check-password' className='mt-2 text-lg sm:text-xl'>Confirm Password</label>
+          <input
+            id='check-password'
+            name='check-password'
+            type='check-password'
+            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Password'
           />
 
