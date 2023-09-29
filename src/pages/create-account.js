@@ -45,11 +45,12 @@ const CreateAccountPage = () => {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users`, fetchConfig)
     const info = await response.json()
-    const userInfo = info.data
+    const { profile, token } = info
 
-    localStorage.setItem('firstName', userInfo.firstName)
-    localStorage.setItem('lastName', userInfo.lastName)
-    localStorage.setItem('email', userInfo.email)
+    localStorage.setItem('token', token)
+    localStorage.setItem('firstName', profile.firstName)
+    localStorage.setItem('lastName', profile.lastName)
+    localStorage.setItem('email', profile.email)
 
     router.push('/profile')
   }

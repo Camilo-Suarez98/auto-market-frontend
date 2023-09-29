@@ -1,19 +1,59 @@
 import Layout from '@/Layout'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { FcGoogle } from 'react-icons/fc'
 
 const LoginPage = () => {
+  const [userData, setUserData] = useState({})
+
+  const router = useRouter()
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    setUserData({
+      ...userData,
+      [name]: value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const loginData = { ...userData }
+
+    const fetchConfig = {
+      method: 'POST',
+      body: JSON.stringify(loginData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/local/login`, fetchConfig)
+    const data = await response.json()
+    const { profile, token } = data
+
+    localStorage.setItem('token', token)
+    localStorage.setItem('firstName', profile.firstName)
+    localStorage.setItem('lastName', profile.lastName)
+    localStorage.setItem('email', profile.email)
+
+    router.push('/profile')
+  }
+
   return (
     <Layout title='Login'>
       <div className='w-5/6 m-auto p-3 my-24 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12 lg:w-2/6 xl:w-1/4'>
-        <form className='flex flex-col'>
+        <form className='flex flex-col' onSubmit={handleSubmit}>
           <h3 className='text-xl min-[500px]:text-2xl sm:text-3xl'>Login</h3>
           <label htmlFor='email' className='mt-4 text-lg sm:text-xl'>Email</label>
           <input
             id='email'
             name='email'
             type='text'
+            onChange={handleChange}
             className='mb-4 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='example@test.com'
           />
@@ -23,6 +63,7 @@ const LoginPage = () => {
             id='password'
             name='password'
             type='password'
+            onChange={handleChange}
             className='mb-4 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Password'
           />
