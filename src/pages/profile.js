@@ -23,23 +23,29 @@ const ProfilePage = ({ user }) => {
           width={250}
           alt='profile'
         />
-        <h3 className='text-4xl my-4'>{info.firstName} {info.lastName}</h3>
-        <h4 className='flex items-center text-2xl my-4'>
+        <h3 className='text-4xl my-4 font-black'>{info.firstName} {info.lastName}</h3>
+        <h4 className='flex items-center text-2xl my-3'>
           <BsFillTelephoneFill />
           {info.phone}
         </h4>
-        <h4 className='flex items-center text-2xl my-4'>
-          <BiLogoGmail size={25} className='mr-4' />
+        <h4 className='flex items-center text-2xl my-3'>
+          <BiLogoGmail size={25} className='mr-3' />
           {info.email}
         </h4>
+        <button
+          onClick={() => router.push('/edit-profile')}
+          className='border-blue-700 border-2 w-44 flex items-center justify-center mt-2 px-3 rounded-xl transition duration-300 hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6'
+        >
+          Edit profile
+        </button>
         <div className='text-center my-8'>
-          <h3>Cars section</h3>
+          <h3 className='text-4xl'>Cars section</h3>
           <div>
             {info.cars.length === 0 ? "You have no cars on sale" : info.cars}
           </div>
           <button
             onClick={() => router.push('/publish-car')}
-            className='border-blue-700 border-2 w-full flex items-center mt-2 px-3 rounded-xl transition duration-300 hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6'
+            className='border-blue-700 border-2 w-full flex items-center justify-center mt-2 px-3 rounded-xl transition duration-300 hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6'
           >
             Publish your car
           </button>
