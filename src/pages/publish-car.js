@@ -2,6 +2,7 @@ import Layout from '@/Layout'
 import React, { useEffect, useState } from 'react'
 import { brands, colors, years } from '../../public/fakeData'
 import { FaCarSide } from 'react-icons/fa'
+import authenticatedRoute from '@/components/HOC/AuthenticatedRoute'
 
 const PublishCarPage = () => {
   const [brandData, setBrandData] = useState([])
@@ -130,4 +131,4 @@ const PublishCarPage = () => {
   )
 }
 
-export default PublishCarPage
+export default authenticatedRoute(PublishCarPage, { pathAfterFailure: '/' })
