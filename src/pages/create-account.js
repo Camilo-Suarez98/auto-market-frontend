@@ -2,6 +2,7 @@ import Layout from '@/Layout'
 import React, { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 const CreateAccountPage = () => {
   const [newUserData, setNewUserData] = useState({
@@ -47,10 +48,11 @@ const CreateAccountPage = () => {
     const info = await response.json()
     const { profile, token } = info
 
-    localStorage.setItem('token', token)
-    localStorage.setItem('firstName', profile.firstName)
-    localStorage.setItem('lastName', profile.lastName)
-    localStorage.setItem('email', profile.email)
+    Cookies.set('token', token, { path: '' })
+    Cookies.set('isLoggedIn', 'true', { path: '/' });
+    Cookies.set('firstName', profile.firstName, { path: '' })
+    Cookies.set('lastName', profile.lastName, { path: '' })
+    Cookies.set('email', profile.email, { path: '' })
 
     router.push('/profile')
   }

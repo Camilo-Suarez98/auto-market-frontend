@@ -1,6 +1,7 @@
 import Layout from '@/Layout'
 import React, { useState } from 'react'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 import { FcGoogle } from 'react-icons/fc'
 
@@ -35,10 +36,11 @@ const LoginPage = () => {
     const data = await response.json()
     const { profile, token } = data
 
-    localStorage.setItem('token', token)
-    localStorage.setItem('firstName', profile.firstName)
-    localStorage.setItem('lastName', profile.lastName)
-    localStorage.setItem('email', profile.email)
+    Cookies.set('token', token, { path: '' })
+    Cookies.set('isLoggedIn', 'true', { path: '/' });
+    Cookies.set('firstName', profile.firstName, { path: '' })
+    Cookies.set('lastName', profile.lastName, { path: '' })
+    Cookies.set('email', profile.email, { path: '' })
 
     router.push('/profile')
   }
