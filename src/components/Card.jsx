@@ -19,10 +19,10 @@ const Card = () => {
             <h2 className='text-2xl'>$ Price</h2>
             <h3 className='text-xl'>Brand with model</h3>
             <div className="flex">
-              <p className='w-1/2'>year</p>  {/* Including kms, year and location */}
-              <p className='w-1/2'>kms</p>  {/* Including kms, year and location */}
+              <p className='w-1/2'>year</p>
+              <p className='w-1/2'>kms</p>
             </div>
-            <p>location</p>  {/* Including kms, year and location */}
+            <p>location</p>
           </div>
         </div>
       </Link>

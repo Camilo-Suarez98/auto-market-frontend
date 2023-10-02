@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
+import { useJwt } from 'react-jwt'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
@@ -9,6 +11,8 @@ import { FaMagnifyingGlass } from 'react-icons/fa6'
 const Header = () => {
   const [showMenu, setShowMenu] = useState(true)
   const [inputValue, setInputValue] = useState('')
+  const token = Cookies.get('token')
+  const { isExpired } = useJwt(token)
 
   const router = useRouter()
 
@@ -19,6 +23,17 @@ const Header = () => {
       setShowMenu(true)
     }
   }
+
+  const handleLogOut = () => {
+    Cookies.remove('token')
+    Cookies.remove('email')
+    Cookies.remove('firstName')
+    Cookies.remove('lastName')
+    Cookies.remove('isLoggedIn')
+
+    router.push('/')
+  }
+
   return (
     <header className='flex items-center justify-around w-full bg-blue-700 h-16 md:justify-evenly'>
       <div className="flex items-center">
@@ -66,18 +81,36 @@ const Header = () => {
           </div>
 
           <div className="flex flex-col justify-around items-center">
-            <button
-              className='bg-blue-500 px-3 py-2 my-5 rounded-md transition duration-500 hover:bg-blue-700'
-              onClick={() => router.push('/create-account')}
-            >
-              Create an Account
-            </button>
-            <button
-              className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
-              onClick={() => router.push('/login')}
-            >
-              Login
-            </button>
+            {isExpired ?
+              <>
+                <button
+                  className='bg-blue-500 px-3 py-2 my-5 rounded-md transition duration-500 hover:bg-blue-700'
+                  onClick={() => router.push('/create-account')}
+                >
+                  Create an Account
+                </button>
+                <button
+                  className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-700'
+                  onClick={() => router.push('/login')}
+                >
+                  Login
+                </button>
+              </> :
+              <>
+                <button
+                  className='bg-blue-500 px-3 py-2 my-2 rounded-md transition duration-500 hover:bg-blue-700'
+                  onClick={() => router.push('/profile')}
+                >
+                  Profile
+                </button>
+                <button
+                  className='bg-blue-500 px-3 py-2 my-2 rounded-md transition duration-500 hover:bg-blue-700'
+                  onClick={handleLogOut}
+                >
+                  Log out
+                </button>
+              </>
+            }
           </div>
 
           {/* to check after/ nice to have */}
@@ -111,18 +144,36 @@ const Header = () => {
         </div>
 
         <div className="flex items-center md:w-72 justify-around lg:justify-between">
-          <button
-            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
-            onClick={() => router.push('/create-account')}
-          >
-            Create an Account
-          </button>
-          <button
-            className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
-            onClick={() => router.push('/login')}
-          >
-            Login
-          </button>
+          {isExpired ?
+            <>
+              <button
+                className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+                onClick={() => router.push('/create-account')}
+              >
+                Create an Account
+              </button>
+              <button
+                className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+                onClick={() => router.push('/login')}
+              >
+                Login
+              </button>
+            </> :
+            <>
+              <button
+                className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+                onClick={() => router.push('/profile')}
+              >
+                Profile
+              </button>
+              <button
+                className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
+                onClick={handleLogOut}
+              >
+                Log out
+              </button>
+            </>
+          }
         </div>
 
         {/* To check after */}

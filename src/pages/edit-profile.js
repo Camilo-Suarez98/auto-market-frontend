@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import authenticatedRoute from '@/components/HOC/AuthenticatedRoute'
@@ -21,6 +21,12 @@ const EditProfilePage = ({ user }) => {
   })
 
   const router = useRouter()
+  const imageRef = useRef(null)
+
+  const handleUpdateImage = () => {
+    imageRef.current?.click()
+  }
+
 
   const readFile = (file) => {
     const reader = new FileReader()
@@ -92,12 +98,24 @@ const EditProfilePage = ({ user }) => {
           <Image
             src={!info.profileImage ?
               "https://res.cloudinary.com/dvkf1eiow/image/upload/v1696189300/imyo2qefjny3ltlfdolm.png" :
-              info.profileImage
+              `${profileImage}`
             }
             height={250}
             width={250}
             alt='profile'
-            className='m-auto'
+            className='m-auto rounded-full'
+            onClick={handleUpdateImage}
+          />
+          <p>Update profile image: </p>
+          <input
+            id='file'
+            name='file'
+            type='file'
+            ref={imageRef}
+            multiple={false}
+            accept='image/*'
+            max-size={1024 * 5}
+            onChange={handleUploadImage}
           />
           <button
             onClick={handleSubmitImage}
@@ -105,15 +123,6 @@ const EditProfilePage = ({ user }) => {
           >
             Change Image
           </button>
-          <input
-            id='file'
-            name='file'
-            type='file'
-            multiple={false}
-            accept='image/*'
-            max-size={1024 * 5}
-            onChange={handleUploadImage}
-          />
           <label htmlFor='firstName' className='mt-2 text-lg sm:text-xl'>First Name</label>
           <input
             id='firstName'

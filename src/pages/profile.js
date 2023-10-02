@@ -7,9 +7,15 @@ import { parse } from 'cookie'
 import { BiLogoGmail } from 'react-icons/bi'
 import { BsFillTelephoneFill } from 'react-icons/bs'
 
-const ProfilePage = ({ user }) => {
+const ProfilePage = ({ user, car }) => {
   const info = user.data
   const router = useRouter()
+  const carInfo = car.data
+
+  const carByUser = carInfo.map(seller => seller)
+
+  const selectUserByCar = carByUser.filter(owner => owner.user?.email === info.email)
+  console.log(selectUserByCar);
 
   return (
     <Layout title={info.firstName}>
@@ -22,11 +28,12 @@ const ProfilePage = ({ user }) => {
           height={250}
           width={250}
           alt='profile'
+          className='rounded-full'
         />
         <h3 className='text-4xl my-4 font-black'>{info.firstName} {info.lastName}</h3>
         <h4 className='flex items-center text-2xl my-3'>
           <BsFillTelephoneFill />
-          {info.phone}
+          {!info.phone ? '55555555' : info.phone}
         </h4>
         <h4 className='flex items-center text-2xl my-3'>
           <BiLogoGmail size={25} className='mr-3' />
@@ -41,7 +48,21 @@ const ProfilePage = ({ user }) => {
         <div className='text-center my-8'>
           <h3 className='text-4xl'>Cars section</h3>
           <div>
-            {info.cars.length === 0 ? "You have no cars on sale" : info.cars}
+            {selectUserByCar &&
+              selectUserByCar.map(car => {
+                return (
+                  <div className='border-2 border-blue-700 rounded-xl' key={car._id}>
+                    <h3 className='text-2xl'>$ {car.price}</h3>
+                    <h3 className='text-xl'>{car.brand} {car.model}</h3>
+                    <div className='flex'>
+                      <p className='w-1/2'>{car.year}</p>
+                      <p className='w-1/2'>{car.km} kms</p>
+                    </div>
+                    <p>{car.location}</p>
+                  </div>
+                )
+              })
+            }
           </div>
           <button
             onClick={() => router.push('/publish-car')}
@@ -60,16 +81,23 @@ export default authenticatedRoute(ProfilePage, { pathAfterFailure: '/' })
 export const getServerSideProps = async (context) => {
   const cookie = parse(context.req.headers.cookie || '')
   const getToken = cookie.token || ''
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/single`, {
+
+  const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/single`, {
     headers: {
       'Authorization': `Bearer ${getToken}`
     }
   })
-  const data = await res.json()
+  const userInfo = await userResponse.json()
+
+  const carResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars`)
+  const carInfo = await carResponse.json()
+
+  const [userData, carData] = await Promise.all([userInfo, carInfo]);
 
   return {
     props: {
-      user: data,
+      user: userData,
+      car: carData
     },
   };
 }
