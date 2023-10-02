@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import authenticatedRoute from '@/components/HOC/AuthenticatedRoute'
 import Layout from '@/Layout'
 import Cookies from 'js-cookie'
+import { parse } from 'cookie'
 
 const EditProfilePage = ({ user }) => {
   const info = user.data
   const [message, setMessage] = useState('')
   const [profileImage, setProfileImage] = useState(null)
-  const [saveImage, setSaveImage] = useState()
+  const [imageToSave, setImageToSave] = useState(null)
   const [updateData, setUpdateData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    profileImage: '',
-    password: ''
+    firstName: info.firstName,
+    lastName: info.lastName,
+    email: info.email,
+    phone: info.phone,
+    profileImage: info.profileImage,
+    password: info.password
   })
+
+  const router = useRouter()
 
   const readFile = (file) => {
     const reader = new FileReader()
@@ -26,24 +30,24 @@ const EditProfilePage = ({ user }) => {
 
   const handleUploadImage = (e) => {
     readFile(e.target.files[0])
-    setSaveImage(e.target.files[0])
+    setImageToSave(e.target.files[0])
   }
 
   const handleSubmitImage = async (e) => {
     e.preventDefault()
     const data = new FormData()
 
-    data.append('profileImage', profileImage)
+    data.append('profileImage', imageToSave)
 
     const fetchConfig = {
-      method: 'POST',
+      method: 'PUT',
+      body: data,
       headers: {
-        'Content-Type': 'multiplat/form-data',
         'Authorization': `Bearer ${Cookies.get('token')}`,
       },
     };
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/single`, fetchConfig)
+    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile-image`, fetchConfig)
   }
 
   const handleChange = (e) => {
@@ -58,12 +62,9 @@ const EditProfilePage = ({ user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    setComparePassword('')
-
     const dataToUpload = { ...updateData }
 
     const getToken = Cookies.get('token')
-    console.log(getToken);
     const fetchConfig = {
       method: 'PUT',
       body: JSON.stringify(dataToUpload),
@@ -85,9 +86,9 @@ const EditProfilePage = ({ user }) => {
 
   return (
     <Layout title='Create Account'>
-      <div className='w-5/6 m-auto p-3 my-16 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12 lg:w-2/6 xl:w-1/4'>
+      <div className='flex flex-col items-center justify-center'>
         <form className='flex flex-col' onSubmit={handleSubmit}>
-          <h3 className='text-xl min-[500px]:text-2xl sm:text-3xl'>Edit profile</h3>
+          <h3 className='text-xl text-center min-[500px]:text-2xl sm:text-3xl'>Edit profile</h3>
           <Image
             src={!info.profileImage ?
               "https://res.cloudinary.com/dvkf1eiow/image/upload/v1696189300/imyo2qefjny3ltlfdolm.png" :
@@ -96,10 +97,11 @@ const EditProfilePage = ({ user }) => {
             height={250}
             width={250}
             alt='profile'
+            className='m-auto'
           />
           <button
             onClick={handleSubmitImage}
-            className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
+            className='bg-blue-700 my-2 py-1 rounded-xl mb-8 md:text-xl md:mt-6'
           >
             Change Image
           </button>
@@ -117,7 +119,7 @@ const EditProfilePage = ({ user }) => {
             id='firstName'
             name='firstName'
             onChange={handleChange}
-            value={info.firstName}
+            value={updateData.firstName}
             type='text'
             className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Ex: Pedro'
@@ -128,7 +130,7 @@ const EditProfilePage = ({ user }) => {
             id='lastName'
             name='lastName'
             onChange={handleChange}
-            value={info.lastName}
+            value={updateData.lastName}
             type='text'
             className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Ex: Perez'
@@ -139,7 +141,7 @@ const EditProfilePage = ({ user }) => {
             id='email'
             name='email'
             onChange={handleChange}
-            value={info.email}
+            value={updateData.email}
             type='text'
             className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Ex: example@test.com'
@@ -150,7 +152,7 @@ const EditProfilePage = ({ user }) => {
             id='password'
             name='password'
             onChange={handleChange}
-            value={info.password}
+            value={updateData.password}
             type='password'
             className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             placeholder='Ex: Password'
@@ -160,6 +162,12 @@ const EditProfilePage = ({ user }) => {
             className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
           >
             Upload Profile
+          </button>
+          <button
+            onClick={() => router.push('/profile')}
+            className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
+          >
+            Go back to Profile
           </button>
         </form>
         <p>{message}</p>

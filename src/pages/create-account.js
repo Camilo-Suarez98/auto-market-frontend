@@ -9,6 +9,8 @@ const CreateAccountPage = () => {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
+    profileImage: '',
     password: ''
   })
   const [comparePassword, setComparePassword] = useState('')
