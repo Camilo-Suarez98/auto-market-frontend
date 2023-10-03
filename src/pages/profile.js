@@ -8,15 +8,12 @@ import { parse } from 'cookie'
 import { BiLogoGmail } from 'react-icons/bi'
 import { BsFillTelephoneFill } from 'react-icons/bs'
 
-const ProfilePage = ({ user, car, image }) => {
+const ProfilePage = ({ user, car }) => {
   const router = useRouter()
   const info = user
   const carInfo = car
-  const imageInfo = image
-
   const carByUser = carInfo.map(seller => seller)
   const selectUserByCar = carByUser.filter(owner => owner.user.email === info.email)
-  // pendiente revisar imagenes por carro
 
   return (
     <Layout title={info.firstName}>
@@ -53,21 +50,13 @@ const ProfilePage = ({ user, car, image }) => {
               selectUserByCar.map(car => {
                 return (
                   <div className='border-2 border-blue-700 p-4 rounded-xl flex flex-col' key={car._id}>
-                    {car.carImages.length === 0 ?
-                      <Image
-                        src={'https://res.cloudinary.com/dvkf1eiow/image/upload/v1696290235/ppr8s3cg2m8g2hmvgsrn.jpg'}
-                        width={250}
-                        height={250}
-                        alt='Car demo'
-                      /> :
-                      <Image
-                        src={car.carImages}
-                        width={250}
-                        height={250}
-                        alt='Car demostration'
-                      />
-                    }
-                    <Link href={`/car-details/${car._id}`}>
+                    <Image
+                      src={'https://res.cloudinary.com/dvkf1eiow/image/upload/v1696290235/ppr8s3cg2m8g2hmvgsrn.jpg'}
+                      width={250}
+                      height={250}
+                      alt='Car demo'
+                    />
+                    <Link href={`/car-details/${car._id}`} className='transition duration-400 hover:text-blue-700'>
                       <h3 className='text-2xl'>$ {car.price}</h3>
                       <h3 className='text-xl'>{car.brand} {car.model}</h3>
                       <div className='flex'>
@@ -109,16 +98,12 @@ export const getServerSideProps = async (context) => {
   const carResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars`)
   const carInfo = await carResponse.json()
 
-  const imagesResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/car-images/`)
-  const imageInfo = await imagesResponse.json()
-
-  const [userData, carData, imageData] = await Promise.all([userInfo, carInfo, imageInfo]);
+  const [userData, carData] = await Promise.all([userInfo, carInfo]);
 
   return {
     props: {
       user: userData.data,
       car: carData.data,
-      image: imageData.data
     },
   };
 }
