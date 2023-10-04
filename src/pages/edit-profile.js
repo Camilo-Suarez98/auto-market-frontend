@@ -96,6 +96,7 @@ const EditProfilePage = ({ user }) => {
         <h3 className='text-4xl text-center md:mb-9'>Edit profile</h3>
         <form className='flex flex-col justify-center w-5/6 md:w-9/12 md:justify-evenly md:flex-row' onSubmit={handleSubmit}>
           <div className='md:w-5/12'>
+            <p className='text-center'>Click in profile photo to change it</p>
             <Image
               src={!info.profileImage ?
                 "https://res.cloudinary.com/dvkf1eiow/image/upload/v1696189300/imyo2qefjny3ltlfdolm.png" :
@@ -104,10 +105,9 @@ const EditProfilePage = ({ user }) => {
               height={250}
               width={250}
               alt='profile'
-              className='m-auto rounded-full relative'
+              className='m-auto rounded-full relative cursor-pointer'
               onClick={handleUpdateImage}
             />
-            <p>Update profile image: </p>
             <div className='flex flex-col'>
               <input
                 id='file'
@@ -124,7 +124,7 @@ const EditProfilePage = ({ user }) => {
                 onClick={handleSubmitImage}
                 className='border-2 border-blue-700 my-2 p-2 rounded-xl mb-8 md:text-xl md:mt-6 transition duration-300 hover:bg-blue-700'
               >
-                Change Image
+                Upload Image
               </button>
             </div>
           </div>

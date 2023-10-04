@@ -3,17 +3,62 @@ import React, { useEffect, useState } from 'react'
 import { brands, colors, years } from '../../public/fakeData'
 import { FaCarSide } from 'react-icons/fa'
 import authenticatedRoute from '@/components/HOC/AuthenticatedRoute'
+import Cookies from 'js-cookie'
 
 const PublishCarPage = () => {
   const [brandData, setBrandData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [colorsData, setColorsData] = useState([])
+  const [createcarData, setCreateCarData] = useState({
+    brand: '',
+    model: '',
+    engineDisplacement: '',
+    year: '',
+    km: '',
+    location: '',
+    fuel: '',
+    color: '',
+    price: ''
+  })
+
+  const token = Cookies.get('token')
 
   useEffect(() => {
     setBrandData(brands)
     setYearsData(years)
     setColorsData(colors)
   }, [])
+
+  const handleCreateCar = async (e) => {
+    e.preventDefault()
+
+    const newCar = { ...createcarData }
+
+    const fetchConfig = {
+      method: 'POST',
+      body: JSON.stringify(newCar),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars/`, fetchConfig)
+    const newCarData = await response.json()
+    console.log(newCarData);
+
+    setCreateCarData({
+      brand: '',
+      model: '',
+      engineDisplacement: '',
+      year: '',
+      km: '',
+      location: '',
+      fuel: '',
+      color: '',
+      price: ''
+    })
+  }
 
   return (
     <Layout>
@@ -29,20 +74,15 @@ const PublishCarPage = () => {
             <p className='text-center'>Upload images of your car here</p>
             <div className='flex flex-col md:flex-row md:justify-evenly'>
               <button
-                className='bg-blue-700 my-2 p-2 rounded-xl md:text-2xl md:mt-6 transition duration-500 hover:bg-blue-500'
+                className='border-2 border-blue-700 my-2 p-2 rounded-xl md:text-2xl md:mt-6 transition duration-500 hover:bg-blue-700'
               >
                 Upload
-              </button>
-              <button
-                className='bg-red-700 my-2 p-2 rounded-xl md:text-2xl md:mt-6 transition duration-500 hover:bg-red-500'
-              >
-                Delete
               </button>
             </div>
           </div>
 
           <div className='w-5/6 m-auto p-3 mt-4 mb-16 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12'>
-            <form className='flex flex-col'>
+            <form className='flex flex-col' onClick={handleCreateCar}>
               <label htmlFor='brand' className='mt-2 text-lg sm:text-xl'>Brand</label>
               <select id='brand' name='brand' className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'>
                 <option value="Choose an option">-- --</option>
@@ -60,6 +100,15 @@ const PublishCarPage = () => {
                 type='text'
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Sonic'
+              />
+
+              <label htmlFor='engineDisplacement' className='mt-2 text-lg sm:text-xl'>Engine Displacement</label>
+              <input
+                id='engineDisplacement'
+                name='engineDisplacement'
+                type='text'
+                className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+                placeholder='Ex: 2000'
               />
 
               <label htmlFor='year' className='mt-2 text-lg sm:text-xl'>Year</label>
@@ -119,7 +168,7 @@ const PublishCarPage = () => {
               />
 
               <button
-                className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6 transition duration-500 hover:bg-blue-500'
+                className='border-2 border-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6 transition duration-300 hover:bg-blue-700'
               >
                 Publish Car
               </button>
