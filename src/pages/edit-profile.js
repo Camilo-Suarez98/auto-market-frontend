@@ -92,93 +92,98 @@ const EditProfilePage = ({ user }) => {
 
   return (
     <Layout title='Create Account'>
-      <div className='flex flex-col items-center justify-center'>
-        <form className='flex flex-col' onSubmit={handleSubmit}>
-          <h3 className='text-xl text-center min-[500px]:text-2xl sm:text-3xl'>Edit profile</h3>
-          <Image
-            src={!info.profileImage ?
-              "https://res.cloudinary.com/dvkf1eiow/image/upload/v1696189300/imyo2qefjny3ltlfdolm.png" :
-              `${profileImage}`
-            }
-            height={250}
-            width={250}
-            alt='profile'
-            className='m-auto rounded-full'
-            onClick={handleUpdateImage}
-          />
-          <p>Update profile image: </p>
-          <input
-            id='file'
-            name='file'
-            type='file'
-            ref={imageRef}
-            multiple={false}
-            accept='image/*'
-            max-size={1024 * 5}
-            onChange={handleUploadImage}
-          />
-          <button
-            onClick={handleSubmitImage}
-            className='bg-blue-700 my-2 py-1 rounded-xl mb-8 md:text-xl md:mt-6'
-          >
-            Change Image
-          </button>
-          <label htmlFor='firstName' className='mt-2 text-lg sm:text-xl'>First Name</label>
-          <input
-            id='firstName'
-            name='firstName'
-            onChange={handleChange}
-            value={updateData.firstName}
-            type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
-            placeholder='Ex: Pedro'
-          />
+      <div className='flex flex-col items-center justify-center my-14'>
+        <h3 className='text-4xl text-center md:mb-9'>Edit profile</h3>
+        <form className='flex flex-col justify-center w-5/6 md:w-9/12 md:justify-evenly md:flex-row' onSubmit={handleSubmit}>
+          <div className='md:w-5/12'>
+            <Image
+              src={!info.profileImage ?
+                "https://res.cloudinary.com/dvkf1eiow/image/upload/v1696189300/imyo2qefjny3ltlfdolm.png" :
+                `${profileImage}`
+              }
+              height={250}
+              width={250}
+              alt='profile'
+              className='m-auto rounded-full relative'
+              onClick={handleUpdateImage}
+            />
+            <p>Update profile image: </p>
+            <div className='flex flex-col'>
+              <input
+                id='file'
+                name='file'
+                type='file'
+                className='hidden'
+                ref={imageRef}
+                multiple={false}
+                accept='image/*'
+                max-size={1024 * 5}
+                onChange={handleUploadImage}
+              />
+              <button
+                onClick={handleSubmitImage}
+                className='border-2 border-blue-700 my-2 p-2 rounded-xl mb-8 md:text-xl md:mt-6 transition duration-300 hover:bg-blue-700'
+              >
+                Change Image
+              </button>
+            </div>
+          </div>
 
-          <label htmlFor='lastName' className='mt-2 text-lg sm:text-xl'>Last Name</label>
-          <input
-            id='lastName'
-            name='lastName'
-            onChange={handleChange}
-            value={updateData.lastName}
-            type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
-            placeholder='Ex: Perez'
-          />
+          <div className='flex flex-col md:w-5/12'>
+            <label htmlFor='firstName' className='mt-2 text-lg sm:text-xl'>First Name</label>
+            <input
+              id='firstName'
+              name='firstName'
+              onChange={handleChange}
+              value={updateData.firstName}
+              type='text'
+              className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+              placeholder='Ex: Pedro'
+            />
 
-          <label htmlFor='email' className='mt-2 text-lg sm:text-xl'>Email</label>
-          <input
-            id='email'
-            name='email'
-            onChange={handleChange}
-            value={updateData.email}
-            type='text'
-            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
-            placeholder='Ex: example@test.com'
-          />
+            <label htmlFor='lastName' className='mt-2 text-lg sm:text-xl'>Last Name</label>
+            <input
+              id='lastName'
+              name='lastName'
+              onChange={handleChange}
+              value={updateData.lastName}
+              type='text'
+              className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+              placeholder='Ex: Perez'
+            />
 
-          <label htmlFor='password' className='mt-2 text-lg sm:text-xl'>Password</label>
-          <input
-            id='password'
-            name='password'
-            onChange={handleChange}
-            value={updateData.password}
-            type='password'
-            className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
-            placeholder='Ex: Password'
-          />
+            <label htmlFor='email' className='mt-2 text-lg sm:text-xl'>Email</label>
+            <input
+              id='email'
+              name='email'
+              onChange={handleChange}
+              value={updateData.email}
+              type='text'
+              className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+              placeholder='Ex: example@test.com'
+            />
 
-          <button
-            className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
-          >
-            Upload Profile
-          </button>
-          <button
-            onClick={() => router.push('/profile')}
-            className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
-          >
-            Go back to Profile
-          </button>
+            <label htmlFor='password' className='mt-2 text-lg sm:text-xl'>Password</label>
+            <input
+              id='password'
+              name='password'
+              onChange={handleChange}
+              type='password'
+              className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
+            />
+            <button
+              className='border-2 border-blue-700 my-2 mx-1 p-2 rounded-xl mt-6 md:text-xl transition duration-300 hover:bg-blue-700'
+            >
+              Upload Profile
+            </button>
+          </div>
         </form>
+        <button
+          onClick={() => router.push('/profile')}
+          className='border-2 border-blue-700 my-2 mx-1 p-2 rounded-xl mt-8 md:text-xl transition duration-300 hover:bg-blue-700'
+        >
+          Go back to Profile
+        </button>
         <p>{message}</p>
       </div>
     </Layout>

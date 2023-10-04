@@ -115,14 +115,14 @@ const CreateAccountPage = () => {
           />
           {comparePassword && <p>{comparePassword}</p>}
           <button
-            className='bg-blue-700 my-2 py-2 rounded-xl md:text-2xl md:mt-6'
+            className='border-2 border-blue-700 transtion duration-300 my-2 py-2 rounded-xl md:text-2xl md:mt-6 hover:bg-blue-700'
           >
             Create Account
           </button>
         </form>
         <h4 className='text-center mt-6'>OR</h4>
         <button
-          className='border-blue-700 border-2 w-full flex items-center mt-2 px-3 rounded-xl min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6'
+          className='border-blue-700 border-2 transtion duration-300 w-full flex items-center mt-2 px-3 rounded-xl hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6'
         >
           <FcGoogle className='mr-2' />
           Register with Google

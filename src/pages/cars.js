@@ -100,7 +100,7 @@ const CarsPage = () => {
                 <option value=""></option>
               </select>
               <button
-                className='bg-blue-700 mt-2 px-0.5 py-px min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6'
+                className='border-2 border-blue-700 transition duration-300 mt-2 px-0.5 py-px hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 rounded-xl md:text-2xl md:mt-6'
               >
                 Search
               </button>
