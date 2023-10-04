@@ -56,7 +56,7 @@ const ProfilePage = ({ user, car }) => {
                       height={250}
                       alt='Car demo'
                     />
-                    <Link href={`/car-details/${car._id}`} className='transition duration-400 hover:text-blue-700'>
+                    <Link href={`/car-details/${car._id}`} className='transition duration-400 hover:text-blue-500'>
                       <h3 className='text-2xl'>$ {car.price}</h3>
                       <h3 className='text-xl'>{car.brand} {car.model}</h3>
                       <div className='flex'>

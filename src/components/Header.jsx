@@ -101,7 +101,7 @@ const Header = () => {
                   className='bg-blue-500 px-3 py-2 my-2 rounded-md transition duration-500 hover:bg-blue-700'
                   onClick={() => router.push('/profile')}
                 >
-                  Profile
+                  My Profile
                 </button>
                 <button
                   className='bg-blue-500 px-3 py-2 my-2 rounded-md transition duration-500 hover:bg-blue-700'
@@ -164,7 +164,7 @@ const Header = () => {
                 className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
                 onClick={() => router.push('/profile')}
               >
-                Profile
+                My Profile
               </button>
               <button
                 className='bg-blue-500 px-3 py-2 rounded-md transition duration-500 hover:bg-blue-600'
