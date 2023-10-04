@@ -24,7 +24,7 @@ const CarDetailsPage = ({ car, image, user }) => {
   return (
     <Layout title='Car details'>
       <h3 className='text-center text-6xl my-10 w-5/6 m-auto md:w-full'>{info.brand} {info.model}</h3>
-      <div className="flex flex-col items-center w-5/6 m-auto md:flex-row">
+      <div className="flex flex-col items-center w-5/6 m-auto border-2 border-blue-700 rounded-lg p-3 md:flex-row">
         <div className='w-5/6 md:w-1/2'>
           <AwesomeSlider bullets={false}>
             {imageByQuery.map(image => {
@@ -38,7 +38,7 @@ const CarDetailsPage = ({ car, image, user }) => {
           </AwesomeSlider>
         </div>
         <div className='text-center my-8 md:w-1/2'>
-          <h3 className='text-5xl'>$ {parseInt(info.price).toLocaleString()} USD</h3>
+          <h3 className='text-5xl'>${parseInt(info.price).toLocaleString()} USD</h3>
           <p className='text-3xl'>Year: {info.year}</p>
           <p className='text-3xl'>Engine: {info.engineDisplacement == null ? '1000-5000cc' : info.engineDisplacement}</p>
           <p className='text-3xl'>{info.km} kms</p>
@@ -51,8 +51,8 @@ const CarDetailsPage = ({ car, image, user }) => {
         <h3 className='text-center text-3xl mt-12 mb-6'>Contact info</h3>
         {isExpired ?
           <div className='w-5/6 text-center md:w-full'>
-            <h3 className='text-2xl'>Are you interested in this car?</h3>
-            <h4 className='text-2xl'>Log in to view contact information</h4>
+            <h3 className='text-3xl'>Are you interested in this car?</h3>
+            <h4 className='text-3xl'>Log in to view contact information</h4>
             <button
               onClick={() => router.push('/login')}
               className='border-blue-700 border-2 w-full flex items-center justify-center mt-2 px-3 rounded-xl transition duration-300 hover:bg-blue-700 min-[320px]:px-2 min-[320px]:py-1 sm:px-3 sm:py-2 sm:text-xl md:mt-6 md:w-72'
