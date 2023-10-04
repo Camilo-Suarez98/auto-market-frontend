@@ -49,7 +49,7 @@ const Header = () => {
           </h1>
         </Link>
       </div>
-      <div className="burger-menu md:hidden">
+      <div className="flex items-center md:hidden">
         <button
           className='outline-none'
           onClick={handleBurgerMenu}
