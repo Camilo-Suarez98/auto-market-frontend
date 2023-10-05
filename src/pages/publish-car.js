@@ -1,7 +1,7 @@
 import Layout from '@/Layout'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { brands, colors, years } from '../../public/fakeData'
-import { FaCarSide } from 'react-icons/fa'
 import authenticatedRoute from '@/components/HOC/AuthenticatedRoute'
 import Cookies from 'js-cookie'
 
@@ -9,8 +9,7 @@ const PublishCarPage = () => {
   const [brandData, setBrandData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [colorsData, setColorsData] = useState([])
-  const [file, setFile] = useState(null)
-  const [images, setimages] = useState([])
+  const [message, setMessage] = useState('')
   const [createcarData, setCreateCarData] = useState({
     brand: '',
     model: '',
@@ -23,8 +22,7 @@ const PublishCarPage = () => {
     price: ''
   })
 
-  const imagesRef = useRef(null)
-
+  const router = useRouter()
   const token = Cookies.get('token')
 
   useEffect(() => {
@@ -33,30 +31,6 @@ const PublishCarPage = () => {
     setColorsData(colors)
   }, [])
 
-  const handleReferenceImages = () => {
-    imagesRef.current?.click()
-  }
-
-  const readFile = (file) => {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      const newImages = [...images, e.target.result]
-      setimages(newImages)
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const handleUploadImages = (e) => {
-    const selectedFiles = e.target.files
-    const arrayOfFiles = Array.from(selectedFiles)
-
-    arrayOfFiles.forEach((file) => {
-      readFile(file)
-    })
-
-    setFile(selectedFiles)
-  }
-
   const handleChange = (e) => {
     const { name, value } = e.target
 
@@ -64,22 +38,6 @@ const PublishCarPage = () => {
       ...createcarData,
       [name]: value
     })
-  }
-
-  const handleSendImages = async () => {
-    const data = new FormData()
-
-    for (let i = 0; i < file.length; i++) {
-      data.append(`file_${i}`, file[i], file[i].name)
-    }
-
-    const fetchConfigImages = {
-      method: 'POST',
-      body: data,
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/car-images`, fetchConfigImages)
-    console.log('images', await res.json());
   }
 
   const handleCreateCar = async (e) => {
@@ -96,58 +54,41 @@ const PublishCarPage = () => {
       }
     }
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars/`, fetchConfig)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars/`, fetchConfig)
 
-    setCreateCarData({
-      brand: '',
-      model: '',
-      engineDisplacement: '',
-      year: '',
-      km: '',
-      location: '',
-      fuel: '',
-      color: '',
-      price: ''
-    })
+    if (response.ok) {
+      setMessage('Car created succesfully')
+      setCreateCarData({
+        brand: '',
+        model: '',
+        engineDisplacement: '',
+        year: '',
+        km: '',
+        location: '',
+        fuel: '',
+        color: '',
+        price: ''
+      })
+      router.push('/upload-images')
+    } else {
+      response.json()
+      setMessage('There was a problem creating car')
+    }
   }
 
   return (
     <Layout>
       <div>
         <h3 className='text-center text-4xl mt-12'>Publish your car and sell it faster and safer</h3>
+        <h3 className='text-center text-xl mt-12'>First of all, complete this form</h3>
         <div className='flex flex-col items-center min-[991px]:flex-row min-[991px]:items-start'>
-          <div className='w-5/6 m-auto p-3 mt-16 mb-4 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12 lg:mt-4'>
-            <FaCarSide
-              size={'10rem'}
-              className='w-full cursor-pointer'
-              onClick={handleReferenceImages}
-            />
-            <input
-              type='file'
-              className='hidden'
-              ref={imagesRef}
-              accept='image/*'
-              multiple={true}
-              onChange={handleUploadImages}
-            />
-            <p className='text-center'>Upload images of your car here</p>
-            <div className='flex flex-col md:flex-row md:justify-evenly'>
-              <button
-                type='submit'
-                onClick={handleSendImages}
-                className='border-2 border-blue-700 my-2 p-2 rounded-xl md:text-2xl md:mt-6 transition duration-500 hover:bg-blue-700'
-              >
-                Upload
-              </button>
-            </div>
-          </div>
-
           <div className='w-5/6 m-auto p-3 mt-4 mb-16 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:p-6 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12'>
-            <form className='flex flex-col' onClick={handleCreateCar}>
+            <form className='flex flex-col' onSubmit={handleCreateCar}>
               <label htmlFor='brand' className='mt-2 text-lg sm:text-xl'>Brand</label>
               <select
                 id='brand'
                 name='brand'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
               >
@@ -164,6 +105,7 @@ const PublishCarPage = () => {
                 id='model'
                 name='model'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Sonic'
@@ -174,6 +116,7 @@ const PublishCarPage = () => {
                 id='engineDisplacement'
                 name='engineDisplacement'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: 2000'
@@ -183,6 +126,7 @@ const PublishCarPage = () => {
               <select
                 id='year'
                 name='year'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
               >
@@ -199,6 +143,7 @@ const PublishCarPage = () => {
                 id='km'
                 name='km'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: 12972'
@@ -209,6 +154,7 @@ const PublishCarPage = () => {
                 id='location'
                 name='location'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Bucaramanga'
@@ -219,6 +165,7 @@ const PublishCarPage = () => {
                 id='fuel'
                 name='fuel'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: Diesel'
@@ -228,6 +175,7 @@ const PublishCarPage = () => {
               <select
                 id='color'
                 name='color'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
               >
@@ -244,6 +192,7 @@ const PublishCarPage = () => {
                 id='price'
                 name='price'
                 type='text'
+                required
                 onChange={handleChange}
                 className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
                 placeholder='Ex: $20000'
@@ -258,6 +207,7 @@ const PublishCarPage = () => {
             </form>
           </div>
         </div>
+        <p>{message}</p>
       </div>
     </Layout>
   )
