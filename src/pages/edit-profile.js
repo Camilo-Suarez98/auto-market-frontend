@@ -9,7 +9,7 @@ import { parse } from 'cookie'
 const EditProfilePage = ({ user }) => {
   const info = user.data
   const [message, setMessage] = useState('')
-  const [profileImage, setProfileImage] = useState(null)
+  const [profileImage, setProfileImage] = useState(info.profileImage)
   const [imageToSave, setImageToSave] = useState(null)
   const [updateData, setUpdateData] = useState({
     firstName: info.firstName,
@@ -17,7 +17,7 @@ const EditProfilePage = ({ user }) => {
     email: info.email,
     phone: info.phone,
     profileImage: info.profileImage,
-    password: info.password
+    password: ''
   })
 
   const router = useRouter()
@@ -26,7 +26,6 @@ const EditProfilePage = ({ user }) => {
   const handleUpdateImage = () => {
     imageRef.current?.click()
   }
-
 
   const readFile = (file) => {
     const reader = new FileReader()
@@ -43,7 +42,8 @@ const EditProfilePage = ({ user }) => {
     e.preventDefault()
     const data = new FormData()
 
-    data.append('profileImage', imageToSave)
+    data.append('profileImage', imageToSave, imageToSave.name)
+    console.log(imageToSave);
 
     const fetchConfig = {
       method: 'PUT',
@@ -53,7 +53,13 @@ const EditProfilePage = ({ user }) => {
       },
     };
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile-image`, fetchConfig)
+    const responseImage = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile-image`, fetchConfig)
+    if (responseImage.ok) {
+      setMessage('Profile image upload succesfully')
+    } else {
+      const data = responseImage.json()
+      setMessage('Error to upload profile image', data.error)
+    }
   }
 
   const handleChange = (e) => {
@@ -122,6 +128,7 @@ const EditProfilePage = ({ user }) => {
               />
               <button
                 onClick={handleSubmitImage}
+                type='submit'
                 className='border-2 border-blue-700 my-2 p-2 rounded-xl mb-8 md:text-xl md:mt-6 transition duration-300 hover:bg-blue-700'
               >
                 Upload Image
@@ -172,6 +179,7 @@ const EditProfilePage = ({ user }) => {
               className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             />
             <button
+              type='submit'
               className='border-2 border-blue-700 my-2 mx-1 p-2 rounded-xl mt-6 md:text-xl transition duration-300 hover:bg-blue-700'
             >
               Upload Profile
