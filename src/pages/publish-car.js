@@ -36,7 +36,7 @@ const PublishCarPage = () => {
 
     setCreateCarData({
       ...createcarData,
-      [name]: value
+      [name]: value.charAt(0)
     })
   }
 
@@ -94,7 +94,7 @@ const PublishCarPage = () => {
               >
                 <option value="Choose an option">-- --</option>
                 {brandData.map(item => (
-                  <option value={item.brand.toLowerCase()} key={item.brand}>
+                  <option value={item.brand.charAt(0)} key={item.brand}>
                     {item.brand}
                   </option>
                 ))}
@@ -181,7 +181,7 @@ const PublishCarPage = () => {
               >
                 <option value="Choose an option">-- --</option>
                 {colorsData.map(color => (
-                  <option value={color.toLowerCase()} key={color}>
+                  <option value={color.charAt(0)} key={color}>
                     {color}
                   </option>
                 ))}
@@ -207,7 +207,7 @@ const PublishCarPage = () => {
             </form>
           </div>
         </div>
-        <p>{message}</p>
+        <p className='text-center text-2xl'>{message}</p>
       </div>
     </Layout>
   )

@@ -10,54 +10,55 @@ const EditProfilePage = ({ user }) => {
   const info = user.data
   const [message, setMessage] = useState('')
   const [profileImage, setProfileImage] = useState(info.profileImage)
-  const [imageToSave, setImageToSave] = useState(null)
+  const [file, setFile] = useState(null)
   const [updateData, setUpdateData] = useState({
     firstName: info.firstName,
     lastName: info.lastName,
     email: info.email,
     phone: info.phone,
     profileImage: info.profileImage,
-    password: ''
   })
+  const getToken = Cookies.get('token')
 
   const router = useRouter()
   const imageRef = useRef(null)
 
   const handleUpdateImage = () => {
-    imageRef.current?.click()
+    imageRef.current?.click();
   }
 
   const readFile = (file) => {
     const reader = new FileReader()
-    reader.onload = e => setProfileImage(e.target.result)
+    reader.onload = (e) => {
+      const imageBase64Data = e.target.result;
+      setProfileImage(imageBase64Data)
+    }
     reader.readAsDataURL(file)
   }
 
   const handleUploadImage = (e) => {
     readFile(e.target.files[0])
-    setImageToSave(e.target.files[0])
+    setFile(e.target.files[0])
   }
 
   const handleSubmitImage = async (e) => {
     e.preventDefault()
     const data = new FormData()
 
-    data.append('profileImage', imageToSave, imageToSave.name)
-    console.log(imageToSave);
+    data.append('profileImage', file, file.name)
 
     const fetchConfig = {
       method: 'PUT',
       body: data,
       headers: {
-        'Authorization': `Bearer ${Cookies.get('token')}`,
-      },
+        'Authorization': `Bearer ${getToken}`
+      }
     };
 
     const responseImage = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/profile-image`, fetchConfig)
     if (responseImage.ok) {
       setMessage('Profile image upload succesfully')
     } else {
-      const data = responseImage.json()
       setMessage('Error to upload profile image', data.error)
     }
   }
@@ -76,7 +77,6 @@ const EditProfilePage = ({ user }) => {
 
     const dataToUpload = { ...updateData }
 
-    const getToken = Cookies.get('token')
     const fetchConfig = {
       method: 'PUT',
       body: JSON.stringify(dataToUpload),
@@ -123,7 +123,6 @@ const EditProfilePage = ({ user }) => {
                 ref={imageRef}
                 multiple={false}
                 accept='image/*'
-                max-size={1024 * 5}
                 onChange={handleUploadImage}
               />
               <button
@@ -170,12 +169,13 @@ const EditProfilePage = ({ user }) => {
               placeholder='Ex: example@test.com'
             />
 
-            <label htmlFor='password' className='mt-2 text-lg sm:text-xl'>Password</label>
+            <label htmlFor='phone' className='mt-2 text-lg sm:text-xl'>Phone</label>
             <input
-              id='password'
-              name='password'
+              id='phone'
+              name='phone'
               onChange={handleChange}
-              type='password'
+              type='phone'
+              value={updateData.phone}
               className='mb-2 py-1 px-2 rounded-md outline-none text-blue-700'
             />
             <button

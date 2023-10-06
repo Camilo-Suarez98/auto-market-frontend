@@ -6,7 +6,7 @@ import { FaCarSide } from 'react-icons/fa'
 const UploadImagesPages = ({ car }) => {
   const carsInfo = car
   const [file, setFile] = useState(null)
-  const [images, setimages] = useState([])
+  const [images, setimages] = useState(null)
   const imagesRef = useRef(null)
 
   const handleReferenceImages = () => {
@@ -16,7 +16,7 @@ const UploadImagesPages = ({ car }) => {
   const readFile = (file) => {
     const reader = new FileReader()
     reader.onload = (e) => {
-      const newImages = [...images, e.target.result]
+      const newImages = [images, e.target.result]
       setimages(newImages)
     }
     reader.readAsDataURL(file)
@@ -33,27 +33,34 @@ const UploadImagesPages = ({ car }) => {
     setFile(selectedFiles)
   }
 
-  const handleSendImages = async () => {
+  const handleSendImages = async (e) => {
+    e.preventDefault()
     const data = new FormData()
 
     for (let i = 0; i < file.length; i++) {
-      data.append(`file_${i}`, file[i], file[i].name)
+      data.append(`url${i}`, file[i], file[i].name)
     }
 
     const fetchConfigImages = {
       method: 'POST',
       body: data,
     }
+    console.log('formData', fetchConfigImages.body);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/car-images`, fetchConfigImages)
     console.log(await res.json());
+
   }
 
   return (
     <Layout>
       <h3 className='text-center text-3xl mt-16'>Now, it&apos;s time to upload the images</h3>
       <h4 className='text-center text-xl my-6'>Take pictures of your car from different angles</h4>
-      <div className='w-5/6 m-auto p-3 mt-16 mb-4 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:mb-16  min-[500px]:px-6 min-[500px]:py-8 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12 lg:mt-4'>
+      <form
+        onSubmit={handleUploadImages}
+        encType="multipart/form-data"
+        className='w-5/6 m-auto p-3 mt-16 mb-4 border-4 rounded-xl border-blue-700 min-[500px]:w-8/12 min-[500px]:mb-16  min-[500px]:px-6 min-[500px]:py-8 sm:w-7/12 md:w-1/2 min-[991px]:w-5/12 lg:mt-4'
+      >
         <p className='text-center my-4'>To upload images click on the car below</p>
         <FaCarSide
           size={'10rem'}
@@ -77,7 +84,7 @@ const UploadImagesPages = ({ car }) => {
             Upload
           </button>
         </div>
-      </div>
+      </form>
     </Layout>
   )
 }

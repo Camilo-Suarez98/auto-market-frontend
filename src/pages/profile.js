@@ -13,7 +13,7 @@ const ProfilePage = ({ user, car }) => {
   const info = user
   const carInfo = car
   const carByUser = carInfo.map(seller => seller)
-  const selectUserByCar = carByUser.filter(owner => owner.user.email === info.email)
+  const selectUserByCar = carByUser.filter(owner => owner.user?.email === info.email)
 
   return (
     <Layout title={info.firstName}>
@@ -54,7 +54,7 @@ const ProfilePage = ({ user, car }) => {
         <div className='flex flex-col items-center text-center my-8'>
           <h3 className='text-4xl mb-5'>Cars published by you in this moment</h3>
           <div className='flex flex-col gap-5 md:flex-row'>
-            {selectUserByCar &&
+            {selectUserByCar.length >= 1 ?
               selectUserByCar.map(car => {
                 return (
                   <div className='border-2 border-blue-700 p-4 rounded-xl flex flex-col' key={car._id}>
@@ -75,7 +75,8 @@ const ProfilePage = ({ user, car }) => {
                     </Link>
                   </div>
                 )
-              })
+              }) :
+              <p className='text-center text-2xl'>You have no cars published</p>
             }
           </div>
         </div>
