@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-const Card = () => {
+const Card = ({ props }) => {
   return (
     <div className="bg-gray-700 p-3 rounded-xl">
       <Link href='/'>
@@ -16,13 +16,13 @@ const Card = () => {
             />
           </div>
           <div className="info-section">
-            <h2 className='text-2xl'>$ Price</h2>
-            <h3 className='text-xl'>Brand with model</h3>
+            <h2 className='text-2xl'>$ {props.price}</h2>
+            <h3 className='text-xl capitalize'>{props.brand} {props.model}</h3>
             <div className="flex">
-              <p className='w-1/2'>year</p>
-              <p className='w-1/2'>kms</p>
+              <p className='w-1/2'>{props.year}</p>
+              <p className='w-1/2'>{props.km} Kms</p>
             </div>
-            <p>location</p>
+            <p className='text-xl capitalize'>{props.location}</p>
           </div>
         </div>
       </Link>

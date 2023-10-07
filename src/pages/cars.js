@@ -4,11 +4,14 @@ import Card from '@/components/Card'
 import { brands, years, colors } from '../../public/fakeData'
 import { BiFilterAlt } from 'react-icons/bi'
 
-const CarsPage = () => {
+const CarsPage = ({ cars }) => {
   const [showFilters, setShowFilters] = useState(true)
   const [brandsData, setBrandsData] = useState([])
   const [yearsData, setYearsData] = useState([])
   const [colorsData, setColorsData] = useState([])
+
+  const carsInfo = cars
+  console.log(carsInfo);
 
   useEffect(() => {
     setBrandsData(brands)
@@ -182,16 +185,14 @@ const CarsPage = () => {
           </div>
         }
         <div className='w-full flex justify-center flex-wrap gap-6 sm:w-3/4'>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {carsInfo.map(car => {
+            return (
+              <Card
+                key={car._id}
+                props={car}
+              />
+            )
+          })}
         </div>
       </div>
     </Layout>
@@ -199,3 +200,14 @@ const CarsPage = () => {
 }
 
 export default CarsPage
+
+export const getServerSideProps = async () => {
+  const carsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/cars`)
+  const carsInfo = await carsResponse.json()
+
+  return {
+    props: {
+      cars: carsInfo.data
+    }
+  }
+}

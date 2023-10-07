@@ -36,7 +36,7 @@ const PublishCarPage = () => {
 
     setCreateCarData({
       ...createcarData,
-      [name]: value.charAt(0)
+      [name]: value
     })
   }
 
@@ -181,7 +181,7 @@ const PublishCarPage = () => {
               >
                 <option value="Choose an option">-- --</option>
                 {colorsData.map(color => (
-                  <option value={color.charAt(0)} key={color}>
+                  <option value={color} key={color}>
                     {color}
                   </option>
                 ))}
