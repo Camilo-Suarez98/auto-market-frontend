@@ -3,8 +3,9 @@
 This project was developed using Next.js for the frontend and TailwindCSS. Node.js, Express and mongoose are implemented for the backend, using a MongoDB database.
 
 ## Characteristics of the project:
-- A marketplace to publish car on sale.
-- Allows the user to create an account, publish cars, and look for other cars if they are interessted in buy a car
+- A marketplace to publish cars on sale and find the best option to user who is looking for change his car or buy a his first car.
+- Allows the user to create an account, publish cars, and look for other cars if they are interested in buy a car.
+- In the car details the user logged can see seller information to contact it, if he's not logged the app show him a login option first to protect seller info.
 
 ## Start running 🚀
 
@@ -16,7 +17,7 @@ The things you will need to install the software are a computer that isn't too o
 
 ### Installation 🔧
 
-1. Clone the repositories to your local machine: 
+1. Clone the repositories to your computer:
 ```
 git clone git@github.com:Camilo-Suarez98/auto-market-frontend.git
 ```
@@ -48,8 +49,15 @@ Then, run npm install on each of the repositories:
 ```
 npm install
 ```
+OR
+```
+npm i
+```
+
 
 4. Create a `.env` file to include the backend URL.
+
+As you can see in files i have an .env.example, this is a guide to call your environment variables wothout problems
 
 5. Run the code!
 
@@ -81,4 +89,4 @@ For the backend, execute the same commands. Remember to keep both running!
 
 ## Acknowledgements 🎁
 
-I would like to thank the Make it Real team for providing the initial tools (and necessary help) for building this project
+I would like to thank the Make it Real team for providing the tools for building this project.
