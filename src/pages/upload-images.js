@@ -45,11 +45,8 @@ const UploadImagesPages = ({ car }) => {
       method: 'POST',
       body: data,
     }
-    console.log('formData', fetchConfigImages.body);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/car-images`, fetchConfigImages)
-    console.log(await res.json());
-
+    await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/car-images`, fetchConfigImages)
   }
 
   return (

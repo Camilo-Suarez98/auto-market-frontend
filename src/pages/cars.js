@@ -11,7 +11,6 @@ const CarsPage = ({ cars }) => {
   const [colorsData, setColorsData] = useState([])
 
   const carsInfo = cars
-  console.log(carsInfo);
 
   useEffect(() => {
     setBrandsData(brands)
