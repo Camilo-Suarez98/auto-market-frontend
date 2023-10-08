@@ -3,6 +3,7 @@ import Layout from '@/Layout'
 import Card from '@/components/Card'
 import { brands, years, colors } from '../../public/fakeData'
 import { BiFilterAlt } from 'react-icons/bi'
+import Link from 'next/link'
 
 const CarsPage = ({ cars }) => {
   const [showFilters, setShowFilters] = useState(true)
@@ -186,10 +187,15 @@ const CarsPage = ({ cars }) => {
         <div className='w-full flex justify-center flex-wrap gap-6 sm:w-3/4'>
           {carsInfo.map(car => {
             return (
-              <Card
+              <Link
                 key={car._id}
-                props={car}
-              />
+                href={`/car-details/${car._id}`}
+                className='transition duration-400 cursor-pointer hover:text-blue-500'
+              >
+                <Card
+                  props={car}
+                />
+              </Link>
             )
           })}
         </div>
