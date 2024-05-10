@@ -28,19 +28,19 @@ and
 git clone git@github.com:Camilo-Suarez98/auto-market-backend.git
 ```
 
-2. Change directory to /elemental-frontend:
+2. Change directory to /auto-market-frontend:
 ```
 cd auto-market-frontend
 ```
 
-Also change to /elemental-backend in the second repository:
+Also change to /auto-market-backend in the second repository:
 ```
 cd auto-market-backend
 ```
 
 3. Install the frontend and backend dependencies:
 
-Make sure to have installed Node.js:
+Make sure you have Node.js installed:
 ```
 sudo apt install nodejs npm
 ```
@@ -49,11 +49,11 @@ Then, run npm install on each of the repositories:
 ```
 npm install
 ```
+
 OR
 ```
 npm i
 ```
-
 
 4. Create a `.env` file to include the backend URL.
 
@@ -65,13 +65,15 @@ Make sure to be in each repository:
 ```
 cd auto-market-frontend
 ```
+
 Once there, execute
 ```
 npm run dev
 ```
+
 For the backend, execute the same commands. Remember to keep both running!
 
-## Built with 🛠️
+## Built with 🛠️:
 
 - React: [https://nextjs.org/](https://nextjs.org/)
 - TailwindCSS [https://tailwindcss.com/](https://tailwindcss.com/)
